@@ -1,13 +1,13 @@
-'use trict';
 
 const valueTodo = document.querySelector(".form-control");
-const addToDo = document.querySelector("#addButton");
-const clearToDoList = document.getElementById("clearButton");
-const toDoList = document.getElementById("todoList");
+const addTodo = document.querySelector("#addButton");
+const clearTodo = document.querySelector("#clearButton");
+const todoList = document.querySelector("#todoList");
 
 function addTask() {
     const value = valueTodo.value;
     valueTodo.value = "";
+
     const li = document.createElement("li");
     li.style.display = "flex";
     li.style.justifyContent = "space-between";
@@ -21,65 +21,110 @@ function addTask() {
     todoText.style.margin = 0;
     todoText.style.fontWeight = 600;
 
-    const taskBtns = document.createElement("div");
-    taskBtns.style.display = "flex";
-    taskBtns.style.gap = "10px";
+    const buttons = document.createElement("div");
+    buttons.style.display = "flex";
+    buttons.style.gap = "10px";
 
-    const btnEdit = document.createElement("button");
-    btnEdit.textContent = "Edit";
-    btnEdit.classList.add("btn");
-    btnEdit.classList.add("btn-primary");
+    const editBtn = document.createElement("button");
+    editBtn.textContent = "Edit";
+    editBtn.classList.add("btn");
+    editBtn.classList.add("btn-primary");
 
-    const btnComplate = document.createElement("button");
-    btnComplate.textContent = "Complate";
-    btnComplate.classList.add("btn");
-    btnComplate.classList.add("btn-success");
+    const complateBtn = document.createElement("button");
+    complateBtn.textContent = "Complate";
+    complateBtn.classList.add("btn");
+    complateBtn.classList.add("btn-success");
 
-    const btnDelete = document.createElement("button");
-    btnDelete.textContent = "Delete";
-    btnDelete.classList.add("btn");
-    btnDelete.classList.add("btn-danger");
+    const deleteBtn = document.createElement("button");
+    deleteBtn.textContent = "Delete";
+    deleteBtn.classList.add("btn");
+    deleteBtn.classList.add("btn-danger");
 
     let isComplate = false;
-    btnComplate.addEventListener("click", function () {
+    complateBtn.addEventListener("click", function () {
         isComplate = !isComplate;
         if (isComplate) {
             todoText.style.textDecoration = "line-through";
             todoText.style.opacity = "0.5";
-            btnComplate.textContent = "Uncomplate";
-            btnComplate.classList.add("btn-warning");
-            btnComplate.classList.remove("btn-success");
+            complateBtn.textContent = "Uncomplate";
+            complateBtn.classList.add("btn-warning");
+            complateBtn.classList.remove("btn-success");
         } else {
-            todoText.textContent = "Complate";
+            complateBtn.textContent = "Complate";
             todoText.style.textDecoration = "none";
             todoText.style.opacity = "1";
-            btnComplate.classList.add("btn-success");
+            complateBtn.classList.add("btn-success");
 
-            btnComplate.classList.remove("btn-warning");
+            complateBtn.classList.remove("btn-warning");
         }
     });
 
-    btnEdit.addEventListener("click", function () { });
+    editBtn.addEventListener("click", function () {
 
-    btnDelete.addEventListener("click", function () {
+        const inputEdit = document.createElement("input");
+        inputEdit.value = todoText.textContent;
+        inputEdit.style.background = 'rgb(236, 236, 236)';
+        li.prepend(inputEdit);
+        inputEdit.style.border = 'none';
+        todoText.style.display = "none";
+        editBtn.style.display = "none";
+        complateBtn.style.display = "none";
+        deleteBtn.style.display = "none";
+
+        const okBtn = document.createElement('button');
+        okBtn.textContent = "Ok";
+        okBtn.classList.add("btn");
+        okBtn.classList.add("btn-success");
+        buttons.prepend(okBtn);
+        okBtn.addEventListener('click', function () {
+            todoText.textContent = inputEdit.value;
+            todoText.style.display = "block";
+            editBtn.style.display = "block";
+            complateBtn.style.display = "block";
+            deleteBtn.style.display = "block";
+            inputEdit.style.display = "none";
+            canselBtn.style.display = "none";
+            okBtn.style.display = "none";
+        });
+
+        const canselBtn = document.createElement('button');
+        canselBtn.textContent = "Cancel";
+        canselBtn.classList.add("btn");
+        canselBtn.classList.add("btn-danger");
+        buttons.prepend(canselBtn);
+
+        canselBtn.addEventListener('click', function () {
+            inputEdit.style.display = "none";
+            todoText.style.display = "block";
+            editBtn.style.display = "block";
+            complateBtn.style.display = "block";
+            deleteBtn.style.display = "block";
+            canselBtn.style.display = "none";
+            okBtn.style.display = "none";
+        });
+    });
+
+    deleteBtn.addEventListener("click", function () {
         li.remove();
     });
 
-    taskBtns.append(btnEdit);
-    taskBtns.append(btnComplate);
-    taskBtns.append(btnDelete);
+    buttons.append(editBtn);
+    buttons.append(complateBtn);
+    buttons.append(deleteBtn);
 
     li.append(todoText);
-    li.append(taskBtns);
+    li.append(buttons);
 
-    toDoList.prepend(li);
+    todoList.prepend(li);
+   
 }
 document.addEventListener("keydown", (e) => {
     if (e.key == "Enter") addTask();
 });
 
-addToDo.addEventListener("click", addTask);
+addTodo.addEventListener("click", addTask);
 
-clearToDoList.addEventListener("click", function () {
-    toDoList.innerHTML = "";
+clearTodo.addEventListener("click", function () {
+    todoList.innerHTML = "";
 });
+

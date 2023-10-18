@@ -6,12 +6,11 @@
     list-style-type: none;
 }
 
-/* 
+
 
 li {
     background-color: rgb(236, 236, 236);
     padding: 20px;
-
     display:flex;
     justify-content: center;
     align-items: center;
@@ -21,4 +20,6 @@ li p {
     font-weight: 600;
     margin: 0;
 }
- */
+
+
+ 
